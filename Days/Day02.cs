@@ -1,7 +1,4 @@
-﻿using System.Security.AccessControl;
-using System.Security.Cryptography;
-
-namespace adventofcode2024.Days
+﻿namespace adventofcode2024.Days
 {
     public class Day02
     {
@@ -29,8 +26,7 @@ namespace adventofcode2024.Days
                         levels.Add(level);
                         _levels.Add(level);
                     }
-                    //PrintLevels();
-                    CountIncreasingAndDecreasing();
+                    CountIncreasingAndDecreasing(false);
                 }
             }
             catch (IOException e)
@@ -38,6 +34,11 @@ namespace adventofcode2024.Days
                 Console.WriteLine("The file could not be read");
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public void Day02B()
+        {
+            CountIncreasingAndDecreasing(true);
         }
 
         private void PrintLevels()
@@ -78,18 +79,47 @@ namespace adventofcode2024.Days
             return isIncreasing ^ isDecreasing;
         }
 
-        private int CountIncreasingAndDecreasing()
+        private int CountIncreasingAndDecreasing(bool useDampener = false)
         {
             int count = 0;
             foreach (var level in _levels)
             {
-                if (IsAllIncreasingOrDecreasing(level))
+                // Use Dampener or not?
+                if (useDampener == true)
                 {
+                    if (IsAllIncreasingOrDecreasing(level))
+                    {
+                        count++;
+                    }
+                    else if (IsDampenable(level))
+                    {
+                        count++;
+                    }
+                }
+                // No Dampener (Part One)
+                else 
+                {
+                    if (IsAllIncreasingOrDecreasing(level))
                     count++;
                 }
             }
-            Console.WriteLine("Day 2 - Part One answer is " + count);
+            Console.WriteLine("Day 2 - Part Two answer is " + count);
             return count;
+        }
+
+        // answer less than 405
+        private bool IsDampenable(List<int> level)
+        {
+            for (int i = 0; i < level.Count; i++)
+            {
+                var poppedLevel = level.ToList();
+                poppedLevel.RemoveAt(i);
+                if (IsAllIncreasingOrDecreasing(poppedLevel))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

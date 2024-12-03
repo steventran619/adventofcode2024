@@ -11,6 +11,7 @@ namespace adventofcode2024
             //day1.Day01B();
             var day2 = new Day02();
             day2.Day02A();
+            day2.Day02B();
         }
     }
 }
