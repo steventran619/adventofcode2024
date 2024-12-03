@@ -13,7 +13,7 @@
             List<int> right = new List<int>();
             try
             {
-                using (var sr = new StreamReader("..\\..\\..\\PuzzleInputs\\Day01\\Day01A.txt"))
+                using (var sr = new StreamReader("..\\..\\..\\PuzzleInputs\\Day01_Input.txt"))
                 {
                     string line = "";
                     while ((line = sr.ReadLine()) != null)
